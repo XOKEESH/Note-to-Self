@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+  <title>Dashboard - Note to Self</title>
+{% endblock %}
+
+{% block content %}
+  <div class="dashboard-container">
+    <h1>Welcome to Your Dashboard</h1>
+    <p>Here you can track your gratitude journaling progress, reflect on your day, and visualize your ideal future.</p>
+
+    <!-- Morning Reflection Section -->
+    <section class="morning-reflection">
+      <h2>Morning Reflection</h2>
+      <form action="/morning-reflection" method="POST">
+        {% csrf_token %}
+
+        <label for="gratitude-1">I am grateful for...</label>
+        <textarea name="gratitude-1" id="gratitude-1" rows="2" placeholder="What are you grateful for?"></textarea>
+        <textarea name="gratitude-2" id="gratitude-2" rows="2" placeholder="What are you grateful for?"></textarea>
+        <textarea name="gratitude-3" id="gratitude-3" rows="2" placeholder="What are you grateful for?"></textarea>
+
+        <label for="great-day">What would make today great?</label>
+        <textarea name="great-day-1" id="great-day-1" rows="2" placeholder="What would make today great?"></textarea>
+        <textarea name="great-day-2" id="great-day-2" rows="2" placeholder="What would make today great?"></textarea>
+        <textarea name="great-day-3" id="great-day-3" rows="2" placeholder="What would make today great?"></textarea>
+
+        <label for="affirmation">Daily Affirmation</label>
+        <textarea name="affirmation" id="affirmation" rows="3" placeholder="Write your daily affirmation..."></textarea>
+
+        <button type="submit">Save Morning Reflection</button>
+      </form>
+    </section>
+
+    <!-- Evening Reflection Section -->
+    <section class="evening-reflection">
+      <h2>Evening Reflection</h2>
+      <form action="/evening-reflection" method="POST">
+        {% csrf_token %}
+
+        <label for="highlights-1">Highlights of the Day</label>
+        <textarea name="highlights-1" id="highlights-1" rows="2" placeholder="What went well today?"></textarea>
+        <textarea name="highlights-2" id="highlights-2" rows="2" placeholder="What went well today?"></textarea>
+        <textarea name="highlights-3" id="highlights-3" rows="2" placeholder="What went well today?"></textarea>
+
+        <label for="lesson-learned">What did I learn today?</label>
+        <textarea name="lesson-learned" id="lesson-learned" rows="3" placeholder="What did you learn today?"></textarea>
+
+        <button type="submit">Save Evening Reflection</button>
+      </form>
+    </section>
+
+    <!-- Quotes Section -->
+    <section class="quotes">
+      <h2>Today's Motivational Quote</h2>
+      <img src="{% static quote_image_url %}" alt="Motivational Quote" />
+    </section>
+
+    <!-- Best Case Scenario Section -->
+    <section class="best-case-scenario">
+      <h2>Visualize Your Best Case Scenario</h2>
+      <p>Describe the best version of your day tomorrow:</p>
+      <form action="/best-case-scenario" method="POST">
+        {% csrf_token %}
+        <label for="best-case-scenario">What would make tomorrow great?</label>
+        <textarea name="best-case-scenario" id="best-case-scenario" rows="4" placeholder="Write about the best version of your day..."></textarea>
+        <button type="submit">Save Best Case Scenario</button>
+      </form>
+    </section>
+
+    <section class="journal-progress">
+      <h2>Your Journaling Progress</h2>
+      <p>View your entries, reflect on past entries, and continue your mindfulness journey.</p>
+      <a href="/journal">View Your Journal</a>
+    </section>
+
+  </div>
+{% endblock %}
+

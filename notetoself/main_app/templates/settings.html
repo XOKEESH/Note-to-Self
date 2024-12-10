@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block head %}
+  <title>Settings - Note to Self</title>
+{% endblock %}
+
+{% block content %}
+  <div class="settings-container">
+    <h1>Settings</h1>
+    <p>Update your preferences to enhance your journaling and visualization experience.</p>
+
+    <section class="theme-settings">
+      <h2>Theme Settings</h2>
+      <form method="POST">
+        {% csrf_token %}
+        <label for="theme">Select Theme:</label>
+        <select name="theme" id="theme">
+          <option value="light">Light Mode</option>
+          <option value="dark">Dark Mode</option>
+          <!-- Add more themes if needed -->
+        </select>
+        <button type="submit">Save Theme</button>
+      </form>
+    </section>
+
+    <section class="notification-settings">
+      <h2>Notification Preferences</h2>
+      <form method="POST">
+        {% csrf_token %}
+        <label for="notifications">Enable Notifications:</label>
+        <input type="checkbox" name="notifications" id="notifications" />
+        <button type="submit">Save Settings</button>
+      </form>
+    </section>
+
+    <section class="personal-info">
+      <h2>Personal Information</h2>
+      <p>Update your name, email, or other personal details to keep your profile up to date.</p>
+      <form method="POST">
+        {% csrf_token %}
+        <label for="name">Full Name:</label>
+        <input type="text" name="name" id="name" value="John Doe" />
+        <button type="submit">Save Changes</button>
+      </form>
+    </section>
+  </div>
+{% endblock %}
