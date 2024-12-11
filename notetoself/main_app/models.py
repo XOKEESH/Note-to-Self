@@ -38,3 +38,12 @@ class BestCaseScenario(models.Model):
     def __str__(self):
         return f"Best case scenario for {self.journal_entry.user.username} on {self.journal_entry.date}"
     
+class ReflectionResponse(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    reflection_type = models.CharField(max_length=100) 
+    gratitude_text = models.TextField() 
+    gratitude_image = models.ImageField(upload_to='reflections/', null=True, blank=True)
+    date_created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.reflection_type} by {self.user.username} on {self.date_created}"

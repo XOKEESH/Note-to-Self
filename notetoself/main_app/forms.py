@@ -1,5 +1,15 @@
 from django import forms
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 from .models import MorningReflection, EveningReflection, BestCaseScenario
+
+class CustomUserCreationForm(UserCreationForm):
+    first_name = forms.CharField(max_length=30, required=True, help_text='Required. You cant sign a letter without a name.')
+    email = forms.EmailField(max_length=254, required=True, help_text='Required. Enter a valid email address.')
+
+    class Meta:
+        model = User
+        fields = ['username', 'first_name', 'email', 'password1', 'password2']
 
 class MorningReflectionForm(forms.ModelForm):
     class Meta:
