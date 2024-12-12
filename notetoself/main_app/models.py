@@ -2,7 +2,19 @@ from django.db import models
 from django.contrib.auth.models import User
 from datetime import date
 
-# Create your models here.
+
+# class JournalEntry(models.Model):
+#     user = models.ForeignKey(User, on_delete=models.CASCADE)  
+#     date = models.DateField(auto_now_add=True)  
+#     morning_reflection = models.CharField(null=True, blank=True) 
+#     evening_reflection = models.CharField(null=True, blank=True)
+#     best_case_scenario = models.TextField(null=True, blank=True)
+
+#     def __str__(self):
+#         return f"Journal Entry for {self.user.username} on {self.date}"  
+
+
+
 class JournalEntry(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     date = models.DateField(default=date.today)
@@ -37,7 +49,7 @@ class BestCaseScenario(models.Model):
 
     def __str__(self):
         return f"Best case scenario for {self.journal_entry.user.username} on {self.journal_entry.date}"
-    
+
 class ReflectionResponse(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     reflection_type = models.CharField(max_length=100) 

@@ -1,11 +1,17 @@
 from django.shortcuts import render, redirect
+from django.views.generic.edit import CreateView
+from .models import JournalEntry
+
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponse
+from django.http import JsonResponse
 from datetime import date
+from django.views import View
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import JournalEntry, MorningReflection, EveningReflection, BestCaseScenario, ReflectionResponse  
 from .forms import CustomUserCreationForm, MorningReflectionForm, EveningReflectionForm, BestCaseScenarioForm
 import random
@@ -58,113 +64,173 @@ def dashboard(request):
 def settings(request):
     return render(request, 'settings.html')
 
-@login_required
-def morning_reflection(request):
-    user = request.user
-    journal_entry, created = JournalEntry.objects.get_or_create(user=user, date=date.today())
-    morning_reflection, created = MorningReflection.objects.get_or_create(journal_entry=journal_entry)
+def JournalEntry_index(request):
+    journal_entries = JournalEntry.objects.all()
+    return render(request, 'journal_entries/index.html', {'journal_entries': journal_entries})
 
-    if request.method == 'POST':
-        form = MorningReflectionForm(request.POST, instance=morning_reflection)
-        if form.is_valid():
-            form.save()
-            return redirect('dashboard')
-    else:
-        form = MorningReflectionForm(instance=morning_reflection)
+def JournalEntry_detail(request, journal_entries_id):
+    journal_entry = JournalEntry.objects.get(id=journal_entries_id)
+    return render(request, 'journal_entries/detail.html', {'journal_entry': journal_entry})
 
-    return render(request, 'morning_reflection.html', {'form': form})
-
-@login_required
-def evening_reflection(request):
-    user = request.user
-    journal_entry, created = JournalEntry.objects.get_or_create(user=user, date=date.today())
-    evening_reflection, created = EveningReflection.objects.get_or_create(journal_entry=journal_entry)
-
-    if request.method == 'POST':
-        form = EveningReflectionForm(request.POST, instance=evening_reflection)
-        if form.is_valid():
-            form.save()
-            return redirect('dashboard')
-    else:
-        form = EveningReflectionForm(instance=evening_reflection)
-
-    return render(request, 'evening_reflection.html', {'form': form})
-
-@login_required
-def best_case_scenario(request):
-    user = request.user
-    journal_entry, created = JournalEntry.objects.get_or_create(user=user, date=date.today())
-    best_case_scenario, created = BestCaseScenario.objects.get_or_create(journal_entry=journal_entry)
-
-    if request.method == 'POST':
-        form = BestCaseScenarioForm(request.POST, instance=best_case_scenario)
-        if form.is_valid():
-            form.save()
-            return redirect('dashboard')
-    else:
-        form = BestCaseScenarioForm(instance=best_case_scenario)
-
-    return render(request, 'best_case_scenario.html', {'form': form})
+# class Journal_Entries_Create(CreateView)
+    
+class JournalEntryCreate(CreateView):
+    model = JournalEntry
+    fields = '__all__'
+    success_url = '/journal_entries/'
 
 
-@login_required
-def create_or_update_morning_reflection(request):
-    user = request.user
-    journal_entry, created = JournalEntry.objects.get_or_create(user=user, date=date.today())
-    morning_reflection, created = MorningReflection.objects.get_or_create(journal_entry=journal_entry)
 
-    if request.method == 'POST':
-        form = MorningReflectionForm(request.POST, instance=morning_reflection)
-        if form.is_valid():
-            form.save()
 
-            gratitude_text = request.POST.get('gratitude-1')
-            gratitude_image = request.FILES.get('reflection-image')
 
-            reflection = ReflectionResponse(
-                user=request.user,
-                reflection_type='morning',
-                gratitude_text=gratitude_text,
-                gratitude_image=gratitude_image
-            )
-            reflection.save()
 
-            return redirect('dashboard')
-    else:
-        form = MorningReflectionForm(instance=morning_reflection)
+# Saving or Updating a Reflection
+# class SaveReflectionView(LoginRequiredMixin, View):
+#     def post(self, request):
+#         user = request.user
+#         reflection_type = request.POST.get('reflection_type')  # 'morning_reflection', 'evening_reflection', or 'best_case_scenario'
+#         answers = request.POST.get('answers')  # JSON string for reflections
 
-    return render(request, 'morning_reflection.html', {'form': form})
+#         if reflection_type not in ['morning_reflection', 'evening_reflection', 'best_case_scenario']:
+#             return JsonResponse({'error': 'Invalid reflection type'}, status=400)
 
-@login_required
-def create_or_update_evening_reflection(request):
-    user = request.user
-    journal_entry, created = JournalEntry.objects.get_or_create(user=user, date=date.today())
+#         # Check if today's entry already exists
+#         journal_entry, created = JournalEntry.objects.get_or_create(user=user, date=date.today())
 
-    evening_reflection, created = EveningReflection.objects.get_or_create(journal_entry=journal_entry)
+#         # Update the appropriate reflection
+#         if reflection_type == 'morning_reflection':
+#             journal_entry.morning_reflection = answers
+#         elif reflection_type == 'evening_reflection':
+#             journal_entry.evening_reflection = answers
+#         elif reflection_type == 'best_case_scenario':
+#             journal_entry.best_case_scenario = answers
 
-    if request.method == 'POST':
-        form = EveningReflectionForm(request.POST, instance=evening_reflection)
-        if form.is_valid():
-            form.save()
-            return redirect('dashboard')
-    else:
-        form = EveningReflectionForm(instance=evening_reflection)
+#         journal_entry.save()
+#         return JsonResponse({'message': 'Reflection saved successfully', 'created': created})
+    
+# 
+# class JournalListView(LoginRequiredMixin, ListView):
+#     model = JournalEntry
+#     template_name = 'journalEntries.html'  # Create this template
+#     context_object_name = 'journal_entries'
 
-    return render(request, 'evening_reflection.html', {'form': form})
+#     def get_queryset(self):
+#         return JournalEntry.objects.filter(user=self.request.user).order_by('-date')
 
-@login_required
-def create_or_update_best_case_scenario(request):
-    user = request.user
-    journal_entry, created = JournalEntry.objects.get_or_create(user=user, date=date.today())
+# main_app/views.py
 
-    best_case_scenario, created = BestCaseScenario.objects.get_or_create(journal_entry=journal_entry)
+# class JournalEntry:
+#     def __init__(self, date):
+#         self.date = date
 
-    if request.method == 'POST':
-        form = BestCaseScenarioForm(request.POST, instance=best_case_scenario)
-        if form.is_valid():
-            form.save()
-            return redirect('dashboard')
-    else:
-        form = BestCaseScenarioForm(instance=best_case_scenario)
+# @login_required
+# def morning_reflection(request):
+#     user = request.user
+#     journal_entry, created = JournalEntry.objects.get_or_create(user=user, date=date.today())
+#     morning_reflection, created = MorningReflection.objects.get_or_create(journal_entry=journal_entry)
 
-    return render(request, 'best_case_scenario.html', {'form': form})
+#     if request.method == 'POST':
+#         form = MorningReflectionForm(request.POST, instance=morning_reflection)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('dashboard')
+#     else:
+#         form = MorningReflectionForm(instance=morning_reflection)
+
+#     return render(request, 'morning_reflection.html', {'form': form})
+
+# @login_required
+# def evening_reflection(request):
+#     user = request.user
+#     journal_entry, created = JournalEntry.objects.get_or_create(user=user, date=date.today())
+#     evening_reflection, created = EveningReflection.objects.get_or_create(journal_entry=journal_entry)
+
+#     if request.method == 'POST':
+#         form = EveningReflectionForm(request.POST, instance=evening_reflection)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('dashboard')
+#     else:
+#         form = EveningReflectionForm(instance=evening_reflection)
+
+#     return render(request, 'evening_reflection.html', {'form': form})
+
+# @login_required
+# def best_case_scenario(request):
+#     user = request.user
+#     journal_entry, created = JournalEntry.objects.get_or_create(user=user, date=date.today())
+#     best_case_scenario, created = BestCaseScenario.objects.get_or_create(journal_entry=journal_entry)
+
+#     if request.method == 'POST':
+#         form = BestCaseScenarioForm(request.POST, instance=best_case_scenario)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('dashboard')
+#     else:
+#         form = BestCaseScenarioForm(instance=best_case_scenario)
+
+#     return render(request, 'best_case_scenario.html', {'form': form})
+
+
+# @login_required
+# def create_or_update_morning_reflection(request):
+#     user = request.user
+#     journal_entry, created = JournalEntry.objects.get_or_create(user=user, date=date.today())
+#     morning_reflection, created = MorningReflection.objects.get_or_create(journal_entry=journal_entry)
+
+#     if request.method == 'POST':
+#         form = MorningReflectionForm(request.POST, instance=morning_reflection)
+#         if form.is_valid():
+#             form.save()
+
+#             gratitude_text = request.POST.get('gratitude-1')
+#             gratitude_image = request.FILES.get('reflection-image')
+
+#             reflection = ReflectionResponse(
+#                 user=request.user,
+#                 reflection_type='morning',
+#                 gratitude_text=gratitude_text,
+#                 gratitude_image=gratitude_image
+#             )
+#             reflection.save()
+
+#             return redirect('dashboard')
+#     else:
+#         form = MorningReflectionForm(instance=morning_reflection)
+
+#     return render(request, 'morning_reflection.html', {'form': form})
+
+# @login_required
+# def create_or_update_evening_reflection(request):
+#     user = request.user
+#     journal_entry, created = JournalEntry.objects.get_or_create(user=user, date=date.today())
+
+#     evening_reflection, created = EveningReflection.objects.get_or_create(journal_entry=journal_entry)
+
+#     if request.method == 'POST':
+#         form = EveningReflectionForm(request.POST, instance=evening_reflection)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('dashboard')
+#     else:
+#         form = EveningReflectionForm(instance=evening_reflection)
+
+#     return render(request, 'evening_reflection.html', {'form': form})
+
+# @login_required
+# def create_or_update_best_case_scenario(request):
+#     user = request.user
+#     journal_entry, created = JournalEntry.objects.get_or_create(user=user, date=date.today())
+
+#     best_case_scenario, created = BestCaseScenario.objects.get_or_create(journal_entry=journal_entry)
+
+#     if request.method == 'POST':
+#         form = BestCaseScenarioForm(request.POST, instance=best_case_scenario)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('dashboard')
+#     else:
+#         form = BestCaseScenarioForm(instance=best_case_scenario)
+
+#     return render(request, 'best_case_scenario.html', {'form': form})
+

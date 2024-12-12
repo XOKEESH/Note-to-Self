@@ -1,0 +1,21 @@
+{% extends 'base.html' %} 
+{% load static %} 
+{% block head %}
+<title>Journal Entry Detail - Note to Self</title>
+<link rel="stylesheet" href="{% static 'css/journalentries/je-index.css' %}"/>
+{% endblock %} 
+{% block content %}
+
+<h1>Journal Entry Detail</h1>
+<p>View your entries, reflect on past entries, and continue your mindfulness journey.</p>
+
+<section class="journal-container">
+  <div class="journal-details">
+    <h1>{{ journal_entry.date }}</h1>
+    <h1>12/9/24</h1>
+    <p><strong>Morning Reflection:</strong> {{ entry.morning_reflection|default:"Not completed" }}</p>
+    <p><strong>Evening Reflection:</strong> {{ entry.evening_reflection|default:"Not completed" }}</p>
+    <p><strong>Best Case Scenario:</strong> {{ entry.best_case_scenario|default:"Not completed" }}</p>
+  </div>  
+</section>
+{% endblock %}
