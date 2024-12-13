@@ -16,8 +16,34 @@
     <button id="morning-reflection-btn">Morning Reflection</button>
     <button id="evening-reflection-btn">Evening Reflection</button>
 
+    <a href="{% url 'Morning_Reflection_Create' %}"> Add Morning Reflection</a>
+    <a href="{% url 'Evening_Reflection_Create' %}"> Add Evening Reflection</a>
+
+    <!-- <form 
+    action="{% url 'Morning_Reflection_Create' %}"
+    method="post" 
+    class="subsection-content" 
+    autocomplete="off"
+    >
+      {% csrf_token %} 
+      {{ MorningReflection_Form.as_p }}
+      <button type="submit" class="btn submit">Add Morning Reflection</button>
+    </form> -->
+
+
+    <!-- <form 
+    action="{% url 'Evening_Reflection_Create' %}"
+    method="post" 
+    class="subsection-content" 
+    autocomplete="off"
+    >
+      {% csrf_token %} 
+      {{ EveningReflection_Form.as_p }}
+      <button type="submit" class="btn submit">Add Evening Reflection</button>
+    </form> -->
+
       <!-- Morning Modal -->
-      <div class="modal" id="morning-reflection-modal">
+      <!-- <div class="modal" id="morning-reflection-modal">
         <div class="modal-content">
           <span id="close-modal">X</span>
           <div id="progress-bar-container">
@@ -32,10 +58,10 @@
           <button id="next-question">Next</button>
         </div>
       </div>
-    </section>   
+    </section>    -->
     
     <!-- Evening Modal -->
-    <div class="modal" id="evening-reflection-modal">
+    <!-- <div class="modal" id="evening-reflection-modal">
       <div class="modal-content">
         <span id="close-evening-modal">X</span>
         <div id="evening-progress-bar-container">
@@ -50,7 +76,7 @@
         <button id="next-evening-question">Next</button>
       </div>
     </div>
-  </section>  
+  </section>   -->
 
     <!-- Quotes Section -->
     <section class="quotes">
@@ -92,6 +118,20 @@
         </div>
       </div>
     </section>
+ 
+
+    <a href="{% url 'Bestcase_Scenario_Create' %}"> Start Scenario Exercise</a>
+
+    <!-- <form 
+    action="{% url 'Bestcase_Scenario_Create' %}"
+    method="post" 
+    class="subsection-content" 
+    autocomplete="off"
+    >
+      {% csrf_token %} 
+      {{ BestCaseScenario_Form.as_p }}
+      <button type="submit" class="btn submit">Add New Scenario</button>
+    </form> -->
 
     <!-- Journal Progress Section -->
     <section class="journal-progress">

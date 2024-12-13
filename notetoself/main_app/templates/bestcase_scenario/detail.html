@@ -1,0 +1,29 @@
+{% extends 'base.html' %} 
+{% load static %} 
+
+{% block head %}
+<title>Best Case Scenario Detail - Note to Self</title>
+<link rel="stylesheet" href="{% static 'css/journalentries/je-index.css' %}"/>
+{% endblock %} 
+
+{% block content %}
+<div class="reflection-detail">
+    <h1>Best Case Scenario Detail</h1>
+    <p>Visualize your ideal outcomes and let your imagination guide you to possibilities that inspire and motivate you.</p>
+
+    <div class="reflection-card">
+        <h2>Best Case Scenario for {{ reflection.date }}</h2>
+
+        <div class="reflection-section">
+            <h3>Your Best Case Scenario</h3>
+            <h5>{{ reflection.Scenario_Topic }}</h5>
+            <p>{{ reflection.best_case_scenario }}</p>
+        </div>
+    </div>
+
+    <div class="cat-actions">
+        <a href="{% url 'Bestcase_Scenario_Update' reflection.id %}" class="btn warn">Edit</a>
+        <a href="{% url 'Bestcase_Scenario_Delete' reflection.id %}" class="btn danger">Delete</a>
+    </div>
+</div>
+{% endblock %}

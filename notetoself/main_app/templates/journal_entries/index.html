@@ -1,26 +1,72 @@
 {% extends 'base.html' %} 
 {% load static %} 
+
 {% block head %}
-<title>Journal Entries - Note to Self</title>
+<title>All Reflections and Scenarios - Note to Self</title>
 <link rel="stylesheet" href="{% static 'css/journalentries/je-index.css' %}"/>
 {% endblock %} 
-{% block content %}
 
-<!-- <section class="page-header"> -->
-    <h1>Journal Entry List</h1>
-    <p>View your entries, reflect on past entries, and continue your mindfulness journey.</p>
-  <!-- </section> -->
+{% block content %}
+<div class="entries-index">
+    <h1>All Reflections and Scenarios</h1>
+    <p>Browse through your Morning Reflections, Evening Reflections, and Best Case Scenarios by date.</p>
+    <hr />
 
     <section class="card-container">
-      {% for entry in journal_entries %}
-      <div class="card">
-        <div class="card-content">
-                <h2 class="card-title">{{ entry.date }}</h2>
-                <p><strong>Morning Reflection:</strong> {{ entry.morning_reflection|default:"Not completed" }}</p>
-                <p><strong>Evening Reflection:</strong> {{ entry.evening_reflection|default:"Not completed" }}</p>
-                <p><strong>Best Case Scenario:</strong> {{ entry.best_case_scenario|default:"Not completed" }}</p>
-            {% endfor %}
-          </section>
-        </div>
-      </div>
+      <h1>Morning Reflections</h1>
+        {% for reflections in morning_reflection %}
+          <div class="card">
+            <a href="{% url 'Morning_Reflection_detail' reflections.id %}">
+              <div class="card-content">
+                <div class="card-img-container">
+                  <img
+                    src=""
+                    alt=""
+                  />
+                </div>
+                <h3 class="card-title">{{ reflections.date }}</h3>
+              </div>
+            </a>
+          </div>
+        {% endfor %}
+      </section>
+      <hr />
+      <section class="card-container">
+      <h1>Evening Reflections</h1>
+        {% for reflections in evening_reflection %}
+          <div class="card">
+            <a href="{% url 'Evening_Reflection_detail' reflections.id %}">
+              <div class="card-content">
+                <div class="card-img-container">
+                  <img
+                    src=""
+                    alt=""
+                  />
+                </div>
+                <h3 class="card-title">{{ reflections.date }}</h3>
+              </div>
+            </a>
+          </div>
+        {% endfor %}
+      </section>
+      <hr />
+      <section class="card-container">
+      <h1>Scenario Exercises</h1>
+        {% for reflections in bestcase_scenario %}
+          <div class="card">
+            <a href="{% url 'Bestcase_Scenario_detail' reflections.id %}">
+              <div class="card-content">
+                <div class="card-img-container">
+                  <img
+                    src=""
+                    alt=""
+                  />
+                </div>
+                <h3 class="card-title">{{ reflections.date }} | {{ reflections.Scenario_Topic }}</h3>
+              </div>
+            </a>
+          </div>
+        {% endfor %}
+      </section>
+</div>
 {% endblock %}

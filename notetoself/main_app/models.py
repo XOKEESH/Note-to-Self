@@ -23,32 +23,51 @@ class JournalEntry(models.Model):
     def __str__(self):
         return f"{self.user.username}'s entry on {self.date}"
 
+
 # A model for morning reflection
 class MorningReflection(models.Model):
-    journal_entry = models.OneToOneField(JournalEntry, on_delete=models.CASCADE)
-    grateful_for = models.TextField()
-    what_would_make_today_great = models.TextField()
-    daily_affirmation = models.TextField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    date = models.DateField(default=date.today)
+    Three_things_I_am_grateful_for = models.TextField()
+    What_would_make_today_great = models.TextField()
+    Daily_affirmation = models.TextField()
 
     def __str__(self):
-        return f"Morning reflection for {self.journal_entry.user.username} on {self.journal_entry.date}"
+        return f"Morning reflection for {self.user.username} on {self.date}"
+
 
 # A model for evening reflection
 class EveningReflection(models.Model):
-    journal_entry = models.OneToOneField(JournalEntry, on_delete=models.CASCADE)
-    highlights_of_the_day = models.TextField()
-    what_i_learned_today = models.TextField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    date = models.DateField(default=date.today)
+    Highlights_of_the_day = models.TextField()
+    What_did_I_learn_today = models.TextField()
 
     def __str__(self):
-        return f"Evening reflection for {self.journal_entry.user.username} on {self.journal_entry.date}"
+        return f"Evening reflection for {self.user.username} on {self.date}"
+
 
 # A model for best-case scenario journaling
 class BestCaseScenario(models.Model):
-    journal_entry = models.OneToOneField(JournalEntry, on_delete=models.CASCADE)
-    best_case_scenario = models.TextField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    date = models.DateField(default=date.today)
+    Scenario_Topic = models.CharField(max_length=100)
+    Best_case_scenario = models.TextField()
 
     def __str__(self):
-        return f"Best case scenario for {self.journal_entry.user.username} on {self.journal_entry.date}"
+        return f"Best case scenario for {self.user.username} on {self.date}"
+
+
+
+
+
+
+
+
+
+
+
+
 
 class ReflectionResponse(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

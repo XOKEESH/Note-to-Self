@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import JournalEntry
 
 from django.contrib.auth.views import LoginView
@@ -51,12 +51,15 @@ def signup(request):
 @login_required
 def dashboard(request):
     if request.user.is_authenticated:
-        # Randomly pick a quote image for the user
         random_quote = random.choice(QUOTE_IMAGES)
-        reflections = ReflectionResponse.objects.filter(user=request.user).order_by('-date_created')
+        MorningReflection_Form = MorningReflectionForm()
+        EveningReflection_Form = EveningReflectionForm()
+        BestCaseScenario_Form = BestCaseScenarioForm
         return render(request, 'dashboard.html', {
             'quote_image_url': random_quote,
-            'reflections': reflections
+            'MorningReflection_Form': MorningReflection_Form,
+            'EveningReflection_Form': EveningReflection_Form,
+            'BestCaseScenario_Form' : BestCaseScenario_Form,
         })
     else:
         return redirect('login')
@@ -66,11 +69,31 @@ def settings(request):
 
 def JournalEntry_index(request):
     journal_entries = JournalEntry.objects.all()
-    return render(request, 'journal_entries/index.html', {'journal_entries': journal_entries})
+    morning_reflection = MorningReflection.objects.all()
+    evening_reflection = EveningReflection.objects.all()
+    bestcase_scenario = BestCaseScenario.objects.all()
+    return render(request, 'journal_entries/index.html', 
+                  {'journal_entries': journal_entries,
+                   'morning_reflection': morning_reflection,
+                    'evening_reflection': evening_reflection,
+                    'bestcase_scenario': bestcase_scenario
+                   })
 
 def JournalEntry_detail(request, journal_entries_id):
     journal_entry = JournalEntry.objects.get(id=journal_entries_id)
     return render(request, 'journal_entries/detail.html', {'journal_entry': journal_entry})
+
+def MorningReflection_detail(request, morningref_id):
+    morning_reflection = MorningReflection.objects.get(id=morningref_id)
+    return render(request, 'morning_reflection/detail.html', {'reflection': morning_reflection})
+
+def EveningReflection_detail(request, eveningref_id):
+    evening_reflection = EveningReflection.objects.get(id=eveningref_id)
+    return render(request, 'evening_reflection/detail.html', {'reflection': evening_reflection})
+
+def BestCaseScenario_detail(request, bestcase_id):
+    bestcase_scenario = BestCaseScenario.objects.get(id=bestcase_id)
+    return render(request, 'bestcase_scenario/detail.html', {'reflection': bestcase_scenario})
 
 # class Journal_Entries_Create(CreateView)
     
@@ -79,8 +102,120 @@ class JournalEntryCreate(CreateView):
     fields = '__all__'
     success_url = '/journal_entries/'
 
+class MorningReflectionCreate(CreateView):
+    model = MorningReflection
+    fields = [
+        'date',
+        'Three_things_I_am_grateful_for',
+        'What_would_make_today_great', 
+        'Daily_affirmation'
+    ]
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+    success_url = '/journal_entries/'
+
+class MorningReflectionUpdate(UpdateView):
+    model = MorningReflection
+    fields = [
+        'date',
+        'Three_things_I_am_grateful_for',
+        'What_would_make_today_great', 
+        'Daily_affirmation'
+    ]
+    success_url = '/journal_entries/'
+
+class MorningReflectionDelete(DeleteView):
+    model = MorningReflection
+    success_url = '/journal_entries/'
 
 
+class EveningReflectionCreate(CreateView):
+    model = EveningReflection
+    fields = [
+        'date',
+        'Highlights_of_the_day', 
+        'What_did_I_learn_today'
+    ]
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+    success_url = '/journal_entries/'
+
+class EveningReflectionUpdate(UpdateView):
+    model = EveningReflection
+    fields = [
+        'date',
+        'Highlights_of_the_day', 
+        'What_did_I_learn_today'
+    ]
+    success_url = '/journal_entries/'
+
+class EveningReflectionDelete(DeleteView):
+    model = EveningReflection
+    success_url = '/journal_entries/'
+
+
+class BestCaseScenarioCreate(CreateView):
+    model = BestCaseScenario
+    fields = [
+            'date',
+            'Scenario_Topic',
+            'Best_case_scenario',
+            ]
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+    success_url = '/journal_entries/'
+
+class BestCaseScenarioUpdate(UpdateView):
+    model = BestCaseScenario
+    fields = [
+            'date',
+            'Best_case_scenario',
+            ]
+    success_url = '/journal_entries/'
+
+class BestCaseScenarioDelete(DeleteView):
+    model = BestCaseScenario
+    success_url = '/journal_entries/'
+
+
+
+
+
+
+
+
+
+
+
+# def add_morningref(request, journal_entries_id):
+#     form = MorningReflectionForm(request.POST)
+#     if form.is_valid():
+#         new_morningref = form.save(commit=False)
+#         new_morningref.journal_entries_id = journal_entries_id
+#         new_morningref.save()
+#     return redirect('JournalEntry-detail', journal_entries_id=journal_entries_id)
+
+# def add_eveningref(request, journal_entries_id):
+#     form = EveningReflectionForm(request.POST)
+#     if form.is_valid():
+#         new_eveningref = form.save(commit=False)
+#         new_eveningref.journal_entries_id = journal_entries_id
+#         new_eveningref.save()
+#     return redirect('JournalEntry-detail', journal_entries_id=journal_entries_id)
+
+# def add_bcs(request, journal_entries_id):
+#     form = BestCaseScenarioForm(request.POST)
+#     if form.is_valid():
+#         new_bcs = form.save(commit=False)
+#         new_bcs.journal_entries_id = journal_entries_id
+#         new_bcs.save()
+#     return redirect('JournalEntry-detail', journal_entries_id=journal_entries_id)
 
 
 

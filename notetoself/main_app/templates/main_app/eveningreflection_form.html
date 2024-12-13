@@ -1,0 +1,24 @@
+{% extends 'base.html' %} 
+{% load static %} 
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/form.css' %}" />
+{% endblock %} 
+{% block content %}
+
+<div class="page-header">
+  <h1>Evening Reflection</h1>
+  <img src="{% static 'images/nerd-cat.svg' %}" alt="Note to Self Image" />
+</div>
+
+<form 
+    action=""
+    method="post" 
+    class="subsection-content" 
+    autocomplete="off"
+    >
+        {% csrf_token %} 
+        {{ form.as_p }}
+      <button type="submit" class="btn submit">Add Evening Reflection</button>
+    </form>
+
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'base.html' %} 
+{% load static %} 
+
+{% block head %}
+<title>Evening Reflection Detail - Note to Self</title>
+<link rel="stylesheet" href="{% static 'css/journalentries/je-index.css' %}"/>
+{% endblock %} 
+
+{% block content %}
+<div class="reflection-detail">
+    <h1>Evening Reflection Detail</h1>
+    <p>Reflect on your day's highlights and lessons. End your day with mindfulness and gratitude.</p>
+
+    <div class="reflection-card">
+        <h2>Reflection for {{ reflection.date }}</h2>
+
+        <div class="reflection-section">
+            <h3>Highlights of the Day</h3>
+            <p>{{ reflection.Highlights_of_the_day }}</p>
+        </div>
+
+        <div class="reflection-section">
+            <h3>What Did I Learn Today?</h3>
+            <p>{{ reflection.What_did_I_learn_today }}</p>
+        </div>
+    </div>
+
+    <div class="cat-actions">
+        <a href="{% url 'Evening_Reflection_Update' reflection.id %}" class="btn warn">Edit</a>
+        <a href="{% url 'Evening_Reflection_Delete' reflection.id %}" class="btn danger">Delete</a>
+    </div>
+
+</div>
+{% endblock %}

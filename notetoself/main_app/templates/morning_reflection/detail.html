@@ -1,0 +1,38 @@
+{% extends 'base.html' %} 
+{% load static %} 
+{% block head %}
+<title>Morning Reflection Detail - Note to Self</title>
+<link rel="stylesheet" href="{% static 'css/journalentries/je-index.css' %}"/>
+{% endblock %} 
+
+
+{% block content %}
+<div class="reflection-detail">
+    <h1>Morning Reflection Detail</h1>
+    <p>Take a moment to reflect on your journey. Revisit your gratitude, intentions, and affirmations from today.</p>
+
+    <div class="reflection-card">
+        <h2>Reflection for {{ reflection.date }}</h2>
+
+        <div class="reflection-section">
+            <h3>Three Things I Am Grateful For</h3>
+            <p>{{ reflection.Three_things_I_am_grateful_for }}</p>
+        </div>
+
+        <div class="reflection-section">
+            <h3>What Would Make Today Great</h3>
+            <p>{{ reflection.What_would_make_today_great }}</p>
+        </div>
+
+        <div class="reflection-section">
+            <h3>Daily Affirmation</h3>
+            <p>{{ reflection.Daily_affirmation }}</p>
+        </div>
+    </div>
+
+    <div class="cat-actions">
+        <a href="{% url 'Morning_Reflection_Update' reflection.id %}" class="btn warn">Edit</a>
+        <a href="{% url 'Morning_Reflection_Delete' reflection.id %}" class="btn danger">Delete</a>
+    </div>
+</div>
+{% endblock %}
