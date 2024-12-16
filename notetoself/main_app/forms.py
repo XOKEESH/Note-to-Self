@@ -11,21 +11,24 @@ class CustomUserCreationForm(UserCreationForm):
         model = User
         fields = ['username', 'first_name', 'email', 'password1', 'password2']
 
-class MorningReflectionForm(forms.ModelForm):
+class MorningReflectionForm(forms.ModelForm): 
     class Meta:
         model = MorningReflection
         fields = [
             'Three_things_I_am_grateful_for',
             'What_would_make_today_great', 
-            'Daily_affirmation'
+            'Daily_affirmation',
+            'Image'
             ]
+
 
 class EveningReflectionForm(forms.ModelForm):
     class Meta:
         model = EveningReflection
         fields = [
             'Highlights_of_the_day', 
-            'What_did_I_learn_today'
+            'What_did_I_learn_today',
+            'Image'
             ]
 
 class BestCaseScenarioForm(forms.ModelForm):

@@ -87,13 +87,22 @@ def MorningReflection_detail(request, morningref_id):
     morning_reflection = MorningReflection.objects.get(id=morningref_id)
     return render(request, 'morning_reflection/detail.html', {'reflection': morning_reflection})
 
+def MorningReflection_confirmation(request):
+    return render(request, 'morning_reflection/confirmation.html', {'user': request.user})
+
 def EveningReflection_detail(request, eveningref_id):
     evening_reflection = EveningReflection.objects.get(id=eveningref_id)
     return render(request, 'evening_reflection/detail.html', {'reflection': evening_reflection})
 
+def EveningReflection_confirmation(request):
+    return render(request, 'evening_reflection/confirmation.html', {'user': request.user})
+
 def BestCaseScenario_detail(request, bestcase_id):
     bestcase_scenario = BestCaseScenario.objects.get(id=bestcase_id)
     return render(request, 'bestcase_scenario/detail.html', {'reflection': bestcase_scenario})
+
+def BestCaseScenario_confirmation(request):
+    return render(request, 'bestcase_scenario/confirmation.html', {'user': request.user})
 
 # class Journal_Entries_Create(CreateView)
     
@@ -108,13 +117,15 @@ class MorningReflectionCreate(CreateView):
         'date',
         'Three_things_I_am_grateful_for',
         'What_would_make_today_great', 
-        'Daily_affirmation'
+        'Daily_affirmation',
+        'Image',
+        'Mood'
     ]
 
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
-    success_url = '/journal_entries/'
+    success_url = '/morningreflection/confirmation/'
 
 class MorningReflectionUpdate(UpdateView):
     model = MorningReflection
@@ -136,13 +147,15 @@ class EveningReflectionCreate(CreateView):
     fields = [
         'date',
         'Highlights_of_the_day', 
-        'What_did_I_learn_today'
+        'What_did_I_learn_today',
+        'Image',
+        'Mood'
     ]
 
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
-    success_url = '/journal_entries/'
+    success_url = '/eveningreflection/confirmation/'
 
 class EveningReflectionUpdate(UpdateView):
     model = EveningReflection
@@ -169,7 +182,7 @@ class BestCaseScenarioCreate(CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
-    success_url = '/journal_entries/'
+    success_url = '/bestcasescenario/confirmation/'
 
 class BestCaseScenarioUpdate(UpdateView):
     model = BestCaseScenario

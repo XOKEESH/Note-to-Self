@@ -1,25 +1,58 @@
-{% extends 'base.html' %} 
-{% load static %} 
+{% extends 'base.html' %}
+{% load static %}
 {% block head %}
 <link rel="stylesheet" href="{% static 'css/form.css' %}" />
-{% endblock %} 
-{% block content %}
-
-<div class="page-header">
-  <h1>Morning Reflection</h1>
-  <img src="{% static 'images/nerd-cat.svg' %}" alt="Note to Self Image" />
-</div>
-
-<form 
-    action=""
-    method="post" 
-    class="form-container" 
-    autocomplete="off"
-    >
-      {% csrf_token %} 
-      <table>
-      {{ form.as_table }}
-      </table>
-      <button type="submit" class="btn submit">Add Morning Reflection</button>
-    </form>
 {% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Morning Reflection</h1>
+    <img src="{% static 'images/nerd-cat.svg' %}" alt="Note to Self Image" />
+  </div>
+  
+  <form 
+      action=""
+      method="post" 
+      class="subsection-content" 
+      enctype="multipart/form-data"
+      autocomplete="off"
+      >
+          {% csrf_token %} 
+          {{ form.as_p }}
+          
+        <tr>
+          <td><label>How are you feeling today?</label></td>
+          <td>
+              <div class="mood-options">
+                  {% for value, label in form.Mood.field.choices %}
+                      <label class="mood-option">
+                          <input type="radio" name="Mood" value="{{ value }}" {% if form.Mood.value == value %}checked{% endif %}>
+                          <img src="{% static 'images/' %}{{ value }}.png" alt="{{ label }}" class="mood-image">
+                      </label>
+                  {% endfor %}
+              </div>
+          </td>
+      </tr>
+
+        <button type="submit" class="btn submit">Add Morning Reflection</button>
+      </form>
+{% endblock %}
+
+        <!-- {{ form.Three_things_I_am_grateful_for.label }} {{ form.Three_things_I_am_grateful_for }}
+        {{ form.What_would_make_today_great.label }} {{ form.What_would_make_today_great }}
+        {{ form.Daily_affirmation.label }} {{ form.Daily_affirmation }}
+        {{ form.Image.label }} {{ form.Image }}
+
+        <tr>
+            <td><label>How are you feeling today?</label></td>
+            <td>
+                <div class="mood-options">
+                    {% for value, label in form.Mood.field.choices %}
+                        <label class="mood-option">
+                            <input type="radio" name="Mood" value="{{ value }}" {% if form.Mood.value == value %}checked{% endif %}>
+                            <img src="{% static 'images/' %}{{ value }}.png" alt="{{ label }}" class="mood-image">
+                        </label>
+                    {% endfor %}
+                </div>
+            </td>
+        </tr> -->

@@ -3,21 +3,26 @@
 
 {% block head %}
   <title>Dashboard - Note to Self</title>
-  <link rel="stylesheet" href="{% static 'css/modal.css' %}" />
-  <script defer src="{% static 'js/reflectionModals.js' %}"></script>
+  <link rel="stylesheet" href="{% static 'css/dash.css' %}" />
 {% endblock %}
 
 {% block content %}
   <div class="dashboard-container">
-    <h1>Good Morning, Kisha!</h1>
-    <p>Here you can track your gratitude journaling progress, reflect on your day, and visualize your ideal future.</p>
+    <h1>Good Morning, {{ user.first_name }}!</h1>
+    <h3>Here you can track your gratitude journaling progress, reflect on your day, and visualize your ideal future.</h3>
 
+    <!-- Reflection Buttons -->
     <section class="reflection-buttons">
-    <button id="morning-reflection-btn">Morning Reflection</button>
-    <button id="evening-reflection-btn">Evening Reflection</button>
-
-    <a href="{% url 'Morning_Reflection_Create' %}"> Add Morning Reflection</a>
-    <a href="{% url 'Evening_Reflection_Create' %}"> Add Evening Reflection</a>
+      <!-- <button id="morning-reflection-btn" class="reflection-btn">Morning Reflection</button>
+      <button id="evening-reflection-btn" class="reflection-btn">Evening Reflection</button> -->
+      <a href="{% url 'Morning_Reflection_Create' %}" class="MRreflection-link">  
+        <img src="{% static 'images/MR Button.png' %}" alt="Morning Reflection Button" class="MRbutton-image" />
+      </a>
+    
+      <a href="{% url 'Evening_Reflection_Create' %}" class="reflection-link">
+        <img src="{% static 'images/ER Button.png' %}" alt="Evening Reflection Button" class="ERbutton-image" />
+      </a>
+    </section>
 
     <!-- <form 
     action="{% url 'Morning_Reflection_Create' %}"
@@ -81,46 +86,45 @@
     <!-- Quotes Section -->
     <section class="quotes">
       <h2>Today's Motivational Quote</h2>
-      <img src="{% static quote_image_url %}" alt="Motivational Quote" />
+      <img src="{% static quote_image_url %}" alt="Motivational Quote" class="quote-image" />
     </section>
 
     <!-- Best Case Scenario Section -->
-    <section class="reflection-buttons">
+    <!-- <section class="bcs-section">
       <h2>Best Case Scenario</h2>
-      <button id="bcs-btn">Best Case Scenario</button>
-    
+      <button id="bcs-btn" class="reflection-btn">Start Best Case Scenario</button> -->
+      
       <!-- Modal -->
-      <div class="modal" id="bcs-modal">
+      <!-- <div class="modal" id="bcs-modal">
         <div class="modal-content">
-          <span id="close-bcs-modal">X</span>
-          
+          <span id="close-bcs-modal" class="modal-close-btn">X</span> -->
+
           <!-- Intro Screen -->
-          <div id="bcs-intro">
+          <!-- <div id="bcs-intro" class="modal-screen">
             <h2>Welcome to Best Case Scenario Journaling</h2>
-            <p>Best Case Scenario (BCS) journaling is a powerful exercise to help you visualize and strive toward your ideal outcome. Take a moment to dream big and describe your best-case scenario for your goals, relationships, or future plans.</p>
-            <button id="bcs-skip-intro">Skip Intro</button>
-            <button id="bcs-next">Next</button>
-          </div>
-    
+            <p>BCS journaling is a powerful exercise to help you visualize and strive toward your ideal outcome. Take a moment to dream big and describe your best-case scenario for your goals, relationships, or future plans.</p>
+            <button id="bcs-skip-intro" class="modal-btn">Skip Intro</button>
+            <button id="bcs-next" class="modal-btn">Next</button>
+          </div> -->
+
           <!-- Prompt Screen -->
-          <div id="bcs-prompt" style="display: none;">
-            <h2 id="bcs-header">Describe Your Best Case Scenario</h2>
-            <textarea id="bcs-text-box" placeholder="Describe your best case scenario here..."></textarea>
-            <button id="bcs-submit">Submit</button>
-          </div>
-    
+          <!-- <div id="bcs-prompt" class="modal-screen hidden">
+            <h2>Describe Your Best Case Scenario</h2>
+            <textarea id="bcs-text-box" placeholder="Describe your best case scenario here..." class="modal-textarea"></textarea>
+            <button id="bcs-submit" class="modal-btn">Submit</button>
+          </div> -->
+
           <!-- Confirmation Screen -->
-          <div id="bcs-confirmation" style="display: none;">
+          <!-- <div id="bcs-confirmation" class="modal-screen hidden">
             <h2>Well done!</h2>
             <p>Visualizing your Best Case Scenario is a step toward making it real. Keep striving toward your ideal outcome!</p>
-            <button id="bcs-close">Close</button>
+            <button id="bcs-close" class="modal-btn">Close</button>
           </div>
         </div>
-      </div>
-    </section>
- 
+      </div> -->
+    <!-- </section> -->
 
-    <a href="{% url 'Bestcase_Scenario_Create' %}"> Start Scenario Exercise</a>
+    <a href="{% url 'Bestcase_Scenario_Create' %}" class="reflection-link">Start Scenario Exercise</a>
 
     <!-- <form 
     action="{% url 'Bestcase_Scenario_Create' %}"
@@ -137,19 +141,19 @@
     <section class="journal-progress">
       <h2>Your Journaling Progress</h2>
       <p>View your entries, reflect on past entries, and continue your mindfulness journey.</p>
-      <a href="/journal">View Your Journal</a>
+      <a href="/journal" class="progress-link">View Your Journal</a>
     </section>
 
     <!-- Your Reflections Section -->
     <section class="your-reflections">
       <h2>Your Reflections</h2>
       {% if reflections %}
-        <ul>
+        <ul class="reflection-list">
           {% for reflection in reflections %}
-            <li>
+            <li class="reflection-item">
               <p><strong>Gratitude:</strong> {{ reflection.gratitude_text }}</p>
               {% if reflection.gratitude_image %}
-                <img src="{{ reflection.gratitude_image.url }}" alt="Gratitude Image" style="max-width: 200px;">
+                <img src="{{ reflection.gratitude_image.url }}" alt="Gratitude Image" class="reflection-image">
               {% endif %}
               <p><small>Created on: {{ reflection.date_created }}</small></p>
             </li>
@@ -159,7 +163,6 @@
         <p>You have not added any reflections yet.</p>
       {% endif %}
     </section>
-
   </div>
-  {% endblock %}
+{% endblock %}
 

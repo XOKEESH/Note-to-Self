@@ -1,0 +1,20 @@
+{% extends 'base.html' %} 
+{% load static %} 
+
+{% block head %}
+<title>Morning Reflection Confirmation - Note to Self</title>
+<link rel="stylesheet" href="{% static 'css/journalentries/bcs-detail.css' %}"/>
+{% endblock %} 
+
+{% block content %}
+<div class="reflection-detail">
+  <h1>What a great start to your day, {{ user.first_name }}!</h1>
+  <p>Your morning reflection has been successfully recorded. Taking even a few moments to reflect can set the tone for a focused and intentional day. Remember, each step you take toward self-awareness is a step toward a better version of yourself.</p>
+  <p>See you back here this evening!</p>
+
+  <div class="cat-actions">
+    <a href="{% url 'Journal_Entry_index' %}" class="btn secondary-btn">View Entries</a>
+    <a href="{% url 'dashboard' %}" class="btn warn">Back to Dashboard</a>
+  </div>
+</div>
+{% endblock %}

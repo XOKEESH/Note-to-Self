@@ -1,0 +1,19 @@
+{% extends 'base.html' %} 
+{% load static %} 
+
+{% block head %}
+<title>Morning Reflection Confirmation - Note to Self</title>
+<link rel="stylesheet" href="{% static 'css/journalentries/bcs-detail.css' %}"/>
+{% endblock %} 
+
+{% block content %}
+<div class="reflection-detail">
+  <h1>Well done, {{ user.first_name }}!</h1>
+  <p>You've just crafted a powerful vision of the best possible outcome for this situation. Focusing on the positive possibilities will help you stay calm and confident as you move ahead. Keep this vision in mind, and know that with each step, you're making this ideal scenario a reality.</p>
+
+  <div class="cat-actions">
+    <a href="{% url 'Journal_Entry_index' %}" class="btn secondary-btn">View Entries</a>
+    <a href="{% url 'dashboard' %}" class="btn warn">Back to Dashboard</a>
+  </div>
+</div>
+{% endblock %}

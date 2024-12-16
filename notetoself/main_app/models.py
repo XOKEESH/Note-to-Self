@@ -26,11 +26,27 @@ class JournalEntry(models.Model):
 
 # A model for morning reflection
 class MorningReflection(models.Model):
+
+    MOOD_CHOICES = [
+        ('bad', 'Bad'),
+        ('not_great', 'Not Great'),
+        ('okay', 'Okay'),
+        ('good', 'Good'),
+        ('great', 'Great')
+    ]
+
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     date = models.DateField(default=date.today)
     Three_things_I_am_grateful_for = models.TextField()
     What_would_make_today_great = models.TextField()
     Daily_affirmation = models.TextField()
+    Image = models.ImageField(upload_to='morning_reflections/', blank=True, null=True)
+    Mood = models.CharField(
+        max_length=10,
+        choices=MOOD_CHOICES,
+        default='okay', 
+        null=True
+    )
 
     def __str__(self):
         return f"Morning reflection for {self.user.username} on {self.date}"
@@ -38,10 +54,26 @@ class MorningReflection(models.Model):
 
 # A model for evening reflection
 class EveningReflection(models.Model):
+
+    MOOD_CHOICES = [
+        ('bad', 'Bad'),
+        ('not_great', 'Not Great'),
+        ('okay', 'Okay'),
+        ('good', 'Good'),
+        ('great', 'Great')
+    ]
+    
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     date = models.DateField(default=date.today)
     Highlights_of_the_day = models.TextField()
     What_did_I_learn_today = models.TextField()
+    Image = models.ImageField(upload_to='morning_reflections/', blank=True, null=True)
+    Mood = models.CharField(
+        max_length=100,
+        choices=MOOD_CHOICES,
+        default='okay', 
+        null=True
+    )
 
     def __str__(self):
         return f"Evening reflection for {self.user.username} on {self.date}"

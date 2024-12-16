@@ -6,7 +6,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}" />
+    <link rel="shortcut icon" type="image/png" href="" />
     <title>Note to Self</title>
     <link rel="stylesheet" href="{% static 'css/base.css' %}" />
     {% block head %}
@@ -16,17 +16,17 @@
     <header>
       <div class="header-logo-container">
         <a href="/">
-          <img src="{% static 'images/logo.png' %}" alt="Note to Self App Logo" />
+          <img src="" alt="Note to Self App Logo" />
         </a>
       </div>
       <nav>
         <ul>
         {% if user.is_authenticated %}  
+          <li><a href="{% url 'dashboard' %}">Home</a></li> 
+          <li><a href="{% url 'Journal_Entry_index' %}">Entries</a></li> 
           <li><a href="{% url 'about' %}">About</a></li>
-          <li><a href="{% url 'dashboard' %}">Dashboard</a></li> 
-          <li><a href="{% url 'Journal_Entry_index' %}">Journal Entries</a></li> 
-          <li><a href="{% url 'Journal_Entry_Create' %}">Create an Entry</a></li>
-          <li><a href="{% url 'settings' %}">Settings</a></li> 
+          <!-- <li><a href="{% url 'Journal_Entry_Create' %}">Create an Entry</a></li> -->
+          <li><a href="{% url 'settings' %}">Account</a></li> 
           <li>
             <form id="logout-form" method="post" action="{% url 'logout' %}">
               {% csrf_token %}
@@ -34,10 +34,9 @@
             </form>
           </li>
         {% else %}
-          <li><a href="{% url 'about' %}">About</a></li>
-          <li><a href="{% url 'settings' %}">Settings</a></li>
           <li><a href="{% url 'home' %}">Sign In</a></li>
           <li><a href="{% url 'signup' %}">Sign Up</a></li>
+          <li><a href="{% url 'about' %}">About</a></li>
         {% endif %}
         </ul>
       </nav>

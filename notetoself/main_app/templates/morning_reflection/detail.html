@@ -1,32 +1,68 @@
 {% extends 'base.html' %} 
 {% load static %} 
+
 {% block head %}
 <title>Morning Reflection Detail - Note to Self</title>
-<link rel="stylesheet" href="{% static 'css/journalentries/je-index.css' %}"/>
+<link rel="stylesheet" href="{% static 'css/journalentries/bcs-detail.css' %}"/>
 {% endblock %} 
 
 
 {% block content %}
 <div class="reflection-detail">
-    <h1>Morning Reflection Detail</h1>
-    <p>Take a moment to reflect on your journey. Revisit your gratitude, intentions, and affirmations from today.</p>
+    <h1>Morning Reflection for {{ reflection.date }}</h1>
 
     <div class="reflection-card">
-        <h2>Reflection for {{ reflection.date }}</h2>
-
         <div class="reflection-section">
-            <h3>Three Things I Am Grateful For</h3>
+            <h3>I am grateful for...</h3>
             <p>{{ reflection.Three_things_I_am_grateful_for }}</p>
         </div>
 
         <div class="reflection-section">
-            <h3>What Would Make Today Great</h3>
+            <h3>What would make today great?</h3>
             <p>{{ reflection.What_would_make_today_great }}</p>
         </div>
 
         <div class="reflection-section">
             <h3>Daily Affirmation</h3>
             <p>{{ reflection.Daily_affirmation }}</p>
+        </div>
+
+        <div class="reflection-section">
+            <h3>Image Uploads</h3>
+            {% if reflection.Image %}
+            <img src="{{ reflection.Image.url }}" alt="Reflection Image">
+            {% else %}
+                <p>No image uploaded.</p>
+            {% endif %}
+        </div>
+
+        <div class="reflection-section">
+            <h3>Mood</h3>
+            <div class="mood-display">
+                {% if reflection.Mood %}
+                    <img 
+                        src="{% static 'images/' %}{{ reflection.Mood }}.png" 
+                        alt="{{ reflection.Mood }}" 
+                        class="mood-image"
+                    >
+                    <p>
+                        {% if reflection.Mood == 'bad' %}
+                            Bad
+                        {% elif reflection.Mood == 'not_great' %}
+                            Not Great
+                        {% elif reflection.Mood == 'okay' %}
+                            Okay
+                        {% elif reflection.Mood == 'good' %}
+                            Good
+                        {% elif reflection.Mood == 'great' %}
+                            Great
+                        {% else %}
+                            Unknown Mood
+                        {% endif %}
+                    </p>
+                {% else %}
+                    <p>Unknown Mood</p>
+                {% endif %}
         </div>
     </div>
 

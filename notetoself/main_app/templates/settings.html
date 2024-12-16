@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block head %}
+  <link rel="stylesheet" href="{% static 'css/settings.css' %}" />
   <title>Settings - Note to Self</title>
 {% endblock %}
 
@@ -37,8 +39,12 @@
       <p>Update your name, email, or other personal details to keep your profile up to date.</p>
       <form method="POST">
         {% csrf_token %}
-        <label for="name">Full Name:</label>
-        <input type="text" name="name" id="name" value="John Doe" />
+        <label for="name">Name:</label>
+        <input type="text" name="name" id="name" value="" />
+        
+        <label for="email">Email Address:</label>
+        <input type="text" name="email" id="name" value="" />
+        
         <button type="submit">Save Changes</button>
       </form>
     </section>
