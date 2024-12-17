@@ -11,10 +11,8 @@
   <h1>All Reflections and Scenarios</h1>
   <p>Browse through your Morning Reflections, Evening Reflections, and Best Case Scenarios by date.</p>
   
-  <!-- Toggle Button -->
   <button class="gallery-toggle" id="gallery-toggle">Reflection Gallery</button>
 
-  <!-- Image Gallery -->
   <div class="image-gallery" id="image-gallery">
     {% for reflections in morning_reflection %}
       {% if reflections.Image %}
@@ -102,11 +100,9 @@
     const toggleButton = document.getElementById('gallery-toggle');
     const gallery = document.getElementById('image-gallery');
 
-    // Set initial state
     gallery.style.display = 'none';
     toggleButton.textContent = 'Reflection Gallery';
 
-    // Toggle functionality
     toggleButton.addEventListener('click', () => {
       const isHidden = gallery.style.display === 'none';
       gallery.style.display = isHidden ? 'grid' : 'none';
