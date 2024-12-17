@@ -28,7 +28,7 @@ This app provides a structured journaling experience with daily prompts to encou
 ![alt text](notetoself/main_app/static/images/NTS%20Wireframes.png)
 
 ### Design
-![alt text](main_app/static/images/NTS%20Design.png)
+![alt text](notetoself/main_app/static/images/NTS%20Design.png)
 
 ## Features
 ### Daily Prompts
@@ -58,7 +58,7 @@ Example: "A positive habit I want to implement into my life is __________. Start
 
 ### User Stats and Streaks
 Track user activity, streaks, and progress over time.
-![alt text](main_app/static/images/Mood%20Stats.png)
+![alt text](notetoself/main_app/static/images/Mood%20Stats.png)
 
 ### User Settings
 Allow users to:
@@ -74,4 +74,4 @@ A unique feature enabling users to write letters to their future selves.
 
 ### Shareable Quotes
 Allows users to share branded quotes directly from the application boosting positivity and increasing brand awareness.
-![alt text](main_app/static/images/Share%20Quote.png)
+![alt text](notetoself/main_app/static/images/Share%20Quote.png)
