@@ -1,5 +1,5 @@
 {% extends 'base.html' %} 
-{% load static %} 
+{% load static %}  
 
 {% block head %}
 <title>All Reflections and Scenarios - Note to Self</title>
@@ -8,9 +8,32 @@
 
 {% block content %}
 <div class="entries-index">
-    <h1>All Reflections and Scenarios</h1>
-    <p>Browse through your Morning Reflections, Evening Reflections, and Best Case Scenarios by date.</p>
-    <hr />
+  <h1>All Reflections and Scenarios</h1>
+  <p>Browse through your Morning Reflections, Evening Reflections, and Best Case Scenarios by date.</p>
+  
+  <!-- Toggle Button -->
+  <button class="gallery-toggle" id="gallery-toggle">Reflection Gallery</button>
+
+  <!-- Image Gallery -->
+  <div class="image-gallery" id="image-gallery">
+    {% for reflections in morning_reflection %}
+      {% if reflections.Image %}
+        <a href="{% url 'Morning_Reflection_detail' reflections.id %}">
+          <img src="{{ reflections.Image.url }}" alt="Morning Reflection Image" class="gallery-img">
+        </a>
+      {% endif %}
+    {% endfor %}
+  
+    {% for reflections in evening_reflection %}
+      {% if reflections.Image %}
+        <a href="{% url 'Evening_Reflection_detail' reflections.id %}">
+          <img src="{{ reflections.Image.url }}" alt="Evening Reflection Image" class="gallery-img">
+        </a>
+      {% endif %}
+    {% endfor %}
+  </div>
+  
+  <div class="section-divider"></div>
 
     <section class="card-container">
       <h1>Morning Reflections</h1>
@@ -30,7 +53,9 @@
           </div>
         {% endfor %}
       </section>
-      <hr />
+      
+      <div class="section-divider"></div>
+
       <section class="card-container">
       <h1>Evening Reflections</h1>
         {% for reflections in evening_reflection %}
@@ -49,7 +74,9 @@
           </div>
         {% endfor %}
       </section>
-      <hr />
+      
+      <div class="section-divider"></div>
+
       <section class="card-container">
       <h1>Scenario Exercises</h1>
         {% for reflections in bestcase_scenario %}
@@ -69,4 +96,23 @@
         {% endfor %}
       </section>
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const toggleButton = document.getElementById('gallery-toggle');
+    const gallery = document.getElementById('image-gallery');
+
+    // Set initial state
+    gallery.style.display = 'none';
+    toggleButton.textContent = 'Reflection Gallery';
+
+    // Toggle functionality
+    toggleButton.addEventListener('click', () => {
+      const isHidden = gallery.style.display === 'none';
+      gallery.style.display = isHidden ? 'grid' : 'none';
+      toggleButton.textContent = isHidden ? 'Reflection Gallery' : 'Reflection Gallery';
+    });
+  });
+</script>
 {% endblock %}
+ 

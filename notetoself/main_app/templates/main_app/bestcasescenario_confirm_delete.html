@@ -1,18 +1,25 @@
-{% extends 'base.html' %}  
+{% extends 'base.html' %}
 {% load static %} 
+
+{% block head %}
+<title>Confirm Delete - Note to Self</title>
+<link rel="stylesheet" href="{% static 'css/journalentries/confirmdelete.css' %}"/>
+{% endblock %} 
+
 {% block content %}
+<div class="confirmation-container">
+  <h2>Are you sure you want to delete your best case scenario entry for <em><strong>{{ bestcasescenario.Scenario_Topic }}</strong></em>?</h2>
 
-<div class="page-header">
-  <h1>Delete Best Case Entry?</h1>
-  <img src="{% static 'images/nerd-cat.svg' %}" alt="A cat using a computer" />
+  <form action="" method="post" class="subsection-content">
+    <p>
+      Deleting this entry will remove it forever. Double-check before you confirm—this action can't be reversed! Are you sure you want to proceed?
+    </p>
+    {% csrf_token %}
+    <div class="confirmation-buttons">
+      <a href="{% url 'Bestcase_Scenario_detail' bestcasescenario.id %}" class="btn secondary">Cancel</a>
+      <button type="submit" class="btn danger">Yes - Delete!</button>
+    </div>
+  </form>
 </div>
-
-<h2>Are you sure you want to delete your best case scenario entry for {{ bestcasescenario.Scenario_Topic }}?</h2>
-
-<form action="" method="post" class="form">
-  {% csrf_token %}
-  <a href="{% url 'Bestcase_Scenario_detail' bestcasescenario.id %}" class="btn secondary">Cancel</a>
-  <button type="submit" class="btn danger">Yes - Delete!</button>
-</form>
-
 {% endblock %}
+

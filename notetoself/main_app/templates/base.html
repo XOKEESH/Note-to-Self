@@ -15,8 +15,8 @@
   <body>
     <header>
       <div class="header-logo-container">
-        <a href="/">
-          <img src="" alt="Note to Self App Logo" />
+        <a href="{% url 'dashboard' %}">
+          <img src="{% static 'images/Notetoself text logo.png' %}" alt="Note to Self App Logo" />
         </a>
       </div>
       <nav>
@@ -25,7 +25,6 @@
           <li><a href="{% url 'dashboard' %}">Home</a></li> 
           <li><a href="{% url 'Journal_Entry_index' %}">Entries</a></li> 
           <li><a href="{% url 'about' %}">About</a></li>
-          <!-- <li><a href="{% url 'Journal_Entry_Create' %}">Create an Entry</a></li> -->
           <li><a href="{% url 'settings' %}">Account</a></li> 
           <li>
             <form id="logout-form" method="post" action="{% url 'logout' %}">

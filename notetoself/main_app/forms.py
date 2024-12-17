@@ -14,6 +14,7 @@ class CustomUserCreationForm(UserCreationForm):
 class MorningReflectionForm(forms.ModelForm): 
     class Meta:
         model = MorningReflection
+        exclude = ('Mood',)
         fields = [
             'Three_things_I_am_grateful_for',
             'What_would_make_today_great', 

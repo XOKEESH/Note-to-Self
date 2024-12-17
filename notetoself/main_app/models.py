@@ -3,18 +3,6 @@ from django.contrib.auth.models import User
 from datetime import date
 
 
-# class JournalEntry(models.Model):
-#     user = models.ForeignKey(User, on_delete=models.CASCADE)  
-#     date = models.DateField(auto_now_add=True)  
-#     morning_reflection = models.CharField(null=True, blank=True) 
-#     evening_reflection = models.CharField(null=True, blank=True)
-#     best_case_scenario = models.TextField(null=True, blank=True)
-
-#     def __str__(self):
-#         return f"Journal Entry for {self.user.username} on {self.date}"  
-
-
-
 class JournalEntry(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     date = models.DateField(default=date.today)
@@ -42,12 +30,12 @@ class MorningReflection(models.Model):
     Daily_affirmation = models.TextField()
     Image = models.ImageField(upload_to='morning_reflections/', blank=True, null=True)
     Mood = models.CharField(
-        max_length=10,
+        max_length=100,
         choices=MOOD_CHOICES,
         default='okay', 
         null=True
     )
-
+    
     def __str__(self):
         return f"Morning reflection for {self.user.username} on {self.date}"
 
@@ -89,16 +77,17 @@ class BestCaseScenario(models.Model):
     def __str__(self):
         return f"Best case scenario for {self.user.username} on {self.date}"
 
+class Mood(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    bad = models.IntegerField(default=0)
+    not_great = models.IntegerField(default=0)
+    okay = models.IntegerField(default=0)
+    good = models.IntegerField(default=0)
+    great = models.IntegerField(default=0)
+    date = models.DateField(auto_now_add=True)
 
-
-
-
-
-
-
-
-
-
+    def __str__(self):
+        return f"Mood data for {self.user.username}"
 
 
 class ReflectionResponse(models.Model):

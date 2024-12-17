@@ -5,37 +5,32 @@
 {% endblock %}
 
 {% block content %}
-<div class="page-header">
-    <h1>Morning Reflection</h1>
-    <img src="{% static 'images/nerd-cat.svg' %}" alt="Note to Self Image" />
-  </div>
-  
+<div class="form-container">
+  <h1>Morning Reflection</h1>
+
   <form 
       action=""
-      method="post" 
+      method="post"  
       class="subsection-content" 
       enctype="multipart/form-data"
       autocomplete="off"
-      >
-          {% csrf_token %} 
-          {{ form.as_p }}
-          
-        <tr>
-          <td><label>How are you feeling today?</label></td>
-          <td>
-              <div class="mood-options">
-                  {% for value, label in form.Mood.field.choices %}
-                      <label class="mood-option">
-                          <input type="radio" name="Mood" value="{{ value }}" {% if form.Mood.value == value %}checked{% endif %}>
-                          <img src="{% static 'images/' %}{{ value }}.png" alt="{{ label }}" class="mood-image">
-                      </label>
-                  {% endfor %}
-              </div>
-          </td>
-      </tr>
+  >
+      {% csrf_token %}
+      {{ form.as_p }}
 
-        <button type="submit" class="btn submit">Add Morning Reflection</button>
-      </form>
+      <div class="mood-options">
+        {% for value, label in form.Mood.field.choices %}
+            <label class="mood-option">
+                <input type="radio" name="Mood" value="{{ value }}" {% if form.Mood.value == value %}checked{% endif %}>
+                <img src="{% static 'images/' %}{{ value }}.png" alt="{{ label }}" class="mood-image">
+                <span>{{ label }}</span>
+            </label>
+        {% endfor %}
+    </div>
+
+      <button type="submit" class="btn submit">Add Morning Reflection</button>
+  </form>
+</div>
 {% endblock %}
 
         <!-- {{ form.Three_things_I_am_grateful_for.label }} {{ form.Three_things_I_am_grateful_for }}

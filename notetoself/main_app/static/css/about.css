@@ -1,60 +1,69 @@
 .about-container {
-    background-color: #f3eee8; /* Light background */
-    color: #100e11; /* Dark text color */
-    padding: 20px;
+    background-color: #f3eee8;
+    color: #100e11;
+    padding: 8px 20px;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     max-width: 800px;
     margin: 20px auto;
 }
 
+.about-inner-container {
+    background-color: #ffffff;
+    border: 1px solid #706B68;
+    border-radius: 8px;
+    padding: 8px 20px; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
 .about-container h1 {
     font-size: 2rem;
-    color: #490206; /* Deep red for main heading */
+    color: #490206;
     margin-bottom: 10px;
 }
 
 .about-container p {
-    font-size: 1rem;
-    color: #706B68; /* Muted text for body content */
+    font-size: 1.3rem;
+    color: #585554;
     margin-bottom: 20px;
-    line-height: 1.6; /* Improve readability */
+    line-height: 1.6;
 }
 
 .about-container h2 {
-    font-size: 1.5rem;
-    color: #2c0001; /* Dark red for subheadings */
+    font-size: 2rem;
+    color: #490206;
     border-bottom: 2px solid #706B68;
     padding-bottom: 5px;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
 .about-container h3 {
-    font-size: 1.25rem;
-    color: #490206; /* Deep red for tertiary headings */
+    font-size: 1.6rem;
+    color: #490206;
     margin-bottom: 10px;
 }
 
 .about-container ul {
-    list-style-type: disc;
+    list-style-type: none;
     margin-left: 20px;
     margin-bottom: 20px;
 }
 
 .about-container ul li {
-    color: #100e11; /* Dark text for list items */
+    color: #100e11; 
     margin-bottom: 10px;
-    font-size: 1rem;
+    font-size: 1.2rem;
 }
 
 .about-container strong {
-    color: #2c0001; /* Dark red for emphasis */
+    color: #2c0001;
     font-weight: bold;
 }
 
 .about-container em {
     font-style: italic;
-    color: #490206; /* Deep red for italicized text */
+    color: #490206;
 }
 
 .about-container a {
@@ -65,10 +74,10 @@
 }
 
 .about-container a:hover {
-    color: #2c0001; /* Darker red on hover */
+    color: #2c0001;
 }
 
-/* Add spacing between sections */
 .about-container section {
     margin-bottom: 30px;
 }
+

@@ -4,165 +4,163 @@
 {% block head %}
   <title>Dashboard - Note to Self</title>
   <link rel="stylesheet" href="{% static 'css/dash.css' %}" />
+  <script id="moodData" type="application/json">
+    {{ mood_data|json_script:"moodData" }}
+  </script>
 {% endblock %}
 
 {% block content %}
-  <div class="dashboard-container">
-    <h1>Good Morning, {{ user.first_name }}!</h1>
-    <h3>Here you can track your gratitude journaling progress, reflect on your day, and visualize your ideal future.</h3>
+<div class="dashboard-page">
 
-    <!-- Reflection Buttons -->
+  <section class="Greeting-section">
+    <div id="current-date" class="date-display"></div>
+    <h1>{{ greeting }}, {{ user.first_name }}!</h1>
+    <section class="calendar">
+      <div id="calendar"></div>
+      </section>
+  </section>
+
+    <!-- Reflection Section -->
     <section class="reflection-buttons">
-      <!-- <button id="morning-reflection-btn" class="reflection-btn">Morning Reflection</button>
-      <button id="evening-reflection-btn" class="reflection-btn">Evening Reflection</button> -->
-      <a href="{% url 'Morning_Reflection_Create' %}" class="MRreflection-link">  
-        <img src="{% static 'images/MR Button.png' %}" alt="Morning Reflection Button" class="MRbutton-image" />
+      <a href="{% url 'Morning_Reflection_Create' %}" class="reflection-link">
+          <img src="{% static 'images/MR Reflection Sun.png' %}" alt="Morning Reflection" class="reflection-image" />
       </a>
-    
+
       <a href="{% url 'Evening_Reflection_Create' %}" class="reflection-link">
-        <img src="{% static 'images/ER Button.png' %}" alt="Evening Reflection Button" class="ERbutton-image" />
+          <img src="{% static 'images/ER Reflection Moon.png' %}" alt="Evening Reflection" class="reflection-image" />
       </a>
     </section>
 
-    <!-- <form 
-    action="{% url 'Morning_Reflection_Create' %}"
-    method="post" 
-    class="subsection-content" 
-    autocomplete="off"
-    >
-      {% csrf_token %} 
-      {{ MorningReflection_Form.as_p }}
-      <button type="submit" class="btn submit">Add Morning Reflection</button>
-    </form> -->
-
-
-    <!-- <form 
-    action="{% url 'Evening_Reflection_Create' %}"
-    method="post" 
-    class="subsection-content" 
-    autocomplete="off"
-    >
-      {% csrf_token %} 
-      {{ EveningReflection_Form.as_p }}
-      <button type="submit" class="btn submit">Add Evening Reflection</button>
-    </form> -->
-
-      <!-- Morning Modal -->
-      <!-- <div class="modal" id="morning-reflection-modal">
-        <div class="modal-content">
-          <span id="close-modal">X</span>
-          <div id="progress-bar-container">
-            <div id="progress-bar"></div>
-          </div>
-          <div id="question-content">
-            <h2 id="modal-header">Welcome to Your Morning Reflection</h2>
-            <p id="modal-body">Click next to start your morning reflection.</p>
-            <textarea id="text-box" placeholder="Your response..."></textarea>
-            <input type="file" id="image-upload" />
-          </div>
-          <button id="next-question">Next</button>
-        </div>
-      </div>
-    </section>    -->
-    
-    <!-- Evening Modal -->
-    <!-- <div class="modal" id="evening-reflection-modal">
-      <div class="modal-content">
-        <span id="close-evening-modal">X</span>
-        <div id="evening-progress-bar-container">
-          <div id="evening-progress-bar"></div>
-        </div>
-        <div id="evening-question-content">
-          <h2 id="evening-modal-header">Welcome to Your Evening Reflection</h2>
-          <p id="evening-modal-body">Click next to start your evening reflection.</p>
-          <textarea id="evening-text-box" placeholder="Your response..."></textarea>
-          <input type="file" id="evening-image-upload" />
-        </div>
-        <button id="next-evening-question">Next</button>
-      </div>
-    </div>
-  </section>   -->
-
     <!-- Quotes Section -->
     <section class="quotes">
-      <h2>Today's Motivational Quote</h2>
       <img src="{% static quote_image_url %}" alt="Motivational Quote" class="quote-image" />
     </section>
 
     <!-- Best Case Scenario Section -->
-    <!-- <section class="bcs-section">
-      <h2>Best Case Scenario</h2>
-      <button id="bcs-btn" class="reflection-btn">Start Best Case Scenario</button> -->
-      
-      <!-- Modal -->
-      <!-- <div class="modal" id="bcs-modal">
-        <div class="modal-content">
-          <span id="close-bcs-modal" class="modal-close-btn">X</span> -->
-
-          <!-- Intro Screen -->
-          <!-- <div id="bcs-intro" class="modal-screen">
-            <h2>Welcome to Best Case Scenario Journaling</h2>
-            <p>BCS journaling is a powerful exercise to help you visualize and strive toward your ideal outcome. Take a moment to dream big and describe your best-case scenario for your goals, relationships, or future plans.</p>
-            <button id="bcs-skip-intro" class="modal-btn">Skip Intro</button>
-            <button id="bcs-next" class="modal-btn">Next</button>
-          </div> -->
-
-          <!-- Prompt Screen -->
-          <!-- <div id="bcs-prompt" class="modal-screen hidden">
-            <h2>Describe Your Best Case Scenario</h2>
-            <textarea id="bcs-text-box" placeholder="Describe your best case scenario here..." class="modal-textarea"></textarea>
-            <button id="bcs-submit" class="modal-btn">Submit</button>
-          </div> -->
-
-          <!-- Confirmation Screen -->
-          <!-- <div id="bcs-confirmation" class="modal-screen hidden">
-            <h2>Well done!</h2>
-            <p>Visualizing your Best Case Scenario is a step toward making it real. Keep striving toward your ideal outcome!</p>
-            <button id="bcs-close" class="modal-btn">Close</button>
-          </div>
+    <section class="scenario-button">   
+      <a href="{% url 'Bestcase_Scenario_Create' %}" class="scenario-link">
+        <div class="scenario-card">
+          <img src="{% static 'images/BCS Button.png' %}" alt="Best Case Scenario" class="scenario-image" />
         </div>
-      </div> -->
-    <!-- </section> -->
+      </a>
+    </section> 
+</div>
 
-    <a href="{% url 'Bestcase_Scenario_Create' %}" class="reflection-link">Start Scenario Exercise</a>
+  <script>
+    // For the dynamic date
+    document.addEventListener("DOMContentLoaded", () => {
+      const dateElement = document.getElementById("current-date")
 
-    <!-- <form 
-    action="{% url 'Bestcase_Scenario_Create' %}"
-    method="post" 
-    class="subsection-content" 
-    autocomplete="off"
-    >
-      {% csrf_token %} 
-      {{ BestCaseScenario_Form.as_p }}
-      <button type="submit" class="btn submit">Add New Scenario</button>
-    </form> -->
+      // Create a date object
+      const today = new Date()
 
-    <!-- Journal Progress Section -->
-    <section class="journal-progress">
-      <h2>Your Journaling Progress</h2>
-      <p>View your entries, reflect on past entries, and continue your mindfulness journey.</p>
-      <a href="/journal" class="progress-link">View Your Journal</a>
-    </section>
+      // Format the date (e.g., Monday, June 10, 2024)
+      const options = { weekday: "long", year: "numeric", month: "long", day: "numeric" }
+      const formattedDate = today.toLocaleDateString("en-US", options)
 
-    <!-- Your Reflections Section -->
-    <section class="your-reflections">
-      <h2>Your Reflections</h2>
-      {% if reflections %}
-        <ul class="reflection-list">
-          {% for reflection in reflections %}
-            <li class="reflection-item">
-              <p><strong>Gratitude:</strong> {{ reflection.gratitude_text }}</p>
-              {% if reflection.gratitude_image %}
-                <img src="{{ reflection.gratitude_image.url }}" alt="Gratitude Image" class="reflection-image">
-              {% endif %}
-              <p><small>Created on: {{ reflection.date_created }}</small></p>
-            </li>
-          {% endfor %}
-        </ul>
-      {% else %}
-        <p>You have not added any reflections yet.</p>
-      {% endif %}
-    </section>
-  </div>
+      // Insert the formatted date into the element
+      dateElement.textContent = formattedDate
+    })
+
+    // For dynamic greeting
+    document.addEventListener("DOMContentLoaded", () => {
+      // Get the current hour
+      const currentHour = new Date().getHours();
+      let greeting;
+
+      // Determine the greeting based on time
+      if (currentHour >= 3 && currentHour < 12) {
+        greeting = "Good Morning";
+      } else if (currentHour >= 12 && currentHour < 17) {
+        greeting = "Good Afternoon";
+      } else {
+        greeting = "Good Evening";
+      }
+
+      // Get the user's first name from the Django context
+      const userName = "{{ user.first_name }}";
+
+      // Select the existing <h1> element and update its content
+      const greetingElement = document.querySelector("h1");
+      if (greetingElement) {
+        greetingElement.textContent = `${greeting}, ${userName}!`;
+      }
+    });
+
+    // Calendar
+    document.addEventListener("DOMContentLoaded", () => {
+      const dateElement = document.getElementById("current-date")
+
+      // Create a date object
+      const today = new Date()
+
+      // Format the date (e.g., Monday, June 10, 2024)
+      const options = { weekday: "long", year: "numeric", month: "long", day: "numeric" }
+      const formattedDate = today.toLocaleDateString("en-US", options)
+
+      // Insert the formatted date into the element
+      dateElement.textContent = formattedDate
+    });
+
+    // Display the current week
+    document.addEventListener("DOMContentLoaded", () => {
+      const dateElement = document.getElementById("current-date")
+
+      // Create a date object
+      const today = new Date()
+
+      // Format the date (e.g., Monday, June 10, 2024)
+      const options = { weekday: "long", year: "numeric", month: "long", day: "numeric" }
+      const formattedDate = today.toLocaleDateString("en-US", options)
+
+      // Insert the formatted date into the element
+      dateElement.textContent = formattedDate
+    });
+
+    // Display the current week
+    document.addEventListener("DOMContentLoaded", () => {
+      const calendarElement = document.getElementById("calendar");
+      const today = new Date();
+
+      // Get the current date and day of the week
+      const currentDate = today.getDate();
+      const currentDay = today.getDay(); // Sunday - Saturday : 0 - 6
+
+      // Calculate the starting point of the current week (Sunday)
+      const startOfWeek = new Date(today);
+      startOfWeek.setDate(currentDate - currentDay); // Set to previous Sunday
+
+      // Create the week header (Su, Mo, Tu, etc.)
+      let weekHTML = "<div class='week-header'>";
+      const weekDays = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
+      for (let i = 0; i < 7; i++) {
+        weekHTML += `<div class="day-header">${weekDays[i]}</div>`;
+      }
+      weekHTML += "</div>";
+
+      // Loop through the current week (Sunday to Saturday)
+      weekHTML += "<div class='week-days'>";
+      for (let i = 0; i < 7; i++) {
+        const day = new Date(startOfWeek);
+        day.setDate(day.getDate() + i);
+
+        // Get the date
+        const dayOfMonth = day.getDate();
+
+        // Check if this is the current day
+        const isToday = day.toDateString() === today.toDateString() ? "today" : "";
+
+        weekHTML += `<div class="day ${isToday}">
+                        <span>${dayOfMonth}</span>
+                      </div>`;
+      }
+      weekHTML += "</div>";
+
+      calendarElement.innerHTML = weekHTML;
+    });
+  </script>
 {% endblock %}
+
+
+
 

@@ -3,28 +3,29 @@
 {% block head %}
 <link rel="stylesheet" href="{% static 'css/form.css' %}" />
 {% endblock %} 
-{% block content %}
 
-<div class="page-header">
+{% block content %}
+<div class="form-container">
   {% if object %}
     <h1>Edit {{ object.Scenario_Topic }}</h1>
   {% else %}
     <h1>Best Case Scenario</h1>
   {% endif %}
-</div>
-  <h1>Journaling Exercise</h1>
-  <img src="{% static 'images/nerd-cat.svg' %}" alt="Note to Self Image" />
-</div>
 
-<form 
-    action=""
-    method="post" 
-    class="subsection-content" 
-    autocomplete="off"
-    >
-        {% csrf_token %} 
-        {{ form.as_p }}
+  <p>
+    Transform anxiety into action by focusing on the best possible outcomes. Instead of worrying about what might go wrong, visualize how things could go right. Repeat this practice to build momentum and develop a mindset that sees opportunities in every challenge. Dream big, stay grounded, and take charge of your future with purpose!
+  </p>
+
+  <form 
+      action=""
+      method="post"  
+      class="subsection-content" 
+      autocomplete="off"
+  >
+      {% csrf_token %}
+      {{ form.as_p }}
+
       <button type="submit" class="btn submit">Add Scenario Exercise</button>
-    </form>
-
+  </form>
+</div>
 {% endblock %}
