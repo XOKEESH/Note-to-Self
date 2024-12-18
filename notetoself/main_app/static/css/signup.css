@@ -15,15 +15,11 @@ main {
     flex-direction: column;
   }
   
-  .header-logo-container {
-    display: none;
-  }
-  
   .logo-container {
     max-width: 375px;
   }
   
-  .login {
+  .signup {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -31,29 +27,29 @@ main {
     width: 80%;
   }
   
-  .login h1 {
+  .signup h1 {
     font-size: clamp(3.2rem, 3vw, 4.8rem);
     margin: 10px 0;
   }
   
-  .login > p {
+  .signup > p {
     display: flex;
     flex-direction: column;
     width: 100%;
     margin: 14px 0 0px;
   }
   
-  .login label {
+  .signup label {
     font-size: var(--font-reg);
     margin-bottom: 6px;
   }
   
-  .login input {
+  .signup input {
     font-size: var(--font-l);
     padding: 2px 4px;
   }
   
-  .login .btn {
+  .signup .btn {
     align-self: flex-end;
     margin-right: 0;
     margin-top: 16px;
@@ -74,8 +70,14 @@ main {
   .btn.submit:active {
     background-color: #100e11;
   }
-  
-  @media only screen and (min-width: 768px) {
+
+  .signup .error-message {
+    color: #490206;
+    font-size: 1rem;
+    margin-bottom: 15px;
+  }
+
+@media only screen and (min-width: 768px) {
     main {
       justify-content: space-around;
     }
@@ -84,7 +86,7 @@ main {
       width: 40%;
     }
   
-    .login {
+    .signup {
       border: var(--borders);
       padding: 20px;
       border-radius: var(--card-border-radius);
