@@ -124,7 +124,7 @@ LOGIN_URL = 'home'
 
 
 STATICFILES_DIRS = [
-    BASE_DIR / "static",  # Adjust if your 'static' folder is elsewhere
+    BASE_DIR / "main_app/static",
 ]
 
 # Media files
