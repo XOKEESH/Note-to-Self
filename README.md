@@ -1,4 +1,4 @@
-![Banner](notetoself/main_app/static/images/NTS%20Banner.png)
+![Logo Banner](main_app/static/images/NTS%20Banner.png)
 
 A full-stack journaling application to help users reflect, practice gratitude, and visualize their best outcomes for personal growth and well-being.
 
@@ -27,11 +27,11 @@ This app provides a structured journaling experience with daily prompts to encou
 
 ### Wireframes
 
-![alt text](notetoself/main_app/static/images/NTS%20Wireframes.png)
+![Image of wireframes](main_app/static/images/NTS%20Wireframes.png)
 
 ### Design
 
-![alt text](notetoself/main_app/static/images/NTS%20Design.png)
+![Image of Design Elements](main_app/static/images/NTS%20Design.png)
 
 ## Features
 ### Daily Prompts
@@ -63,7 +63,7 @@ Example: "A positive habit I want to implement into my life is __________. Start
 Track user activity, streaks, and progress over time.
 
 
-![alt text](notetoself/main_app/static/images/Mood%20Stats.png)
+![Image of stats](main_app/static/images/Mood%20Stats.png)
 
 ### User Settings
 Allow users to:
@@ -81,4 +81,4 @@ A unique feature enabling users to write letters to their future selves.
 Allows users to share branded quotes directly from the application boosting positivity and increasing brand awareness.
 
 
-![alt text](notetoself/main_app/static/images/Share%20Quote.png)
+![Image of quotes](main_app/static/images/Share%20Quote.png)
